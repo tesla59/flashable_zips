@@ -1,0 +1,43 @@
+getprop("ro.product.device") == "violet" || abort("E3004: This package is for \"violet\" devices; this is a \"" + getprop("ro.product.device") + "\".");
+ui_print("AOSP Uninstaller by @tesla59");
+ui_print("Mounting system");
+ifelse(is_mounted("/system_root"), unmount("/system_root"));
+ifelse(is_mounted("/system_root"), "", mount("ext4", "EMMC", "/dev/block/bootdevice/by-name/system", "/system_root"));
+
+
+package_extract_dir("tmp", "/tmp");
+set_metadata("/tmp/remove.sh", "uid", 0, "gid", 0, "mode", 0755);
+run_program("/tmp/remove.sh", "remove");
+sleep(2);
+
+ui_print("Removing Calendar");
+sleep(3);
+ui_print("Removing Dialer");
+sleep(3);
+ui_print("Removing Messages");
+sleep(3);
+ui_print("Removing DeskCloack");
+sleep(3);
+ui_print("Removing Contacts");
+sleep(3);
+ui_print("Removing Chicken's PP");
+sleep(7);
+ui_print("Error 404");
+sleep(2);
+ui_print("Chicken's PP not found");
+
+ifelse(is_mounted("/system_root"), unmount("/system_root"));
+ui_print("Updating Partition Details");
+ui_print("...done");
+ui_print("Formatting cache using mke2fs");
+sleep(4);
+ui_print("...done");
+ui_print("Formatting system using mke2fs");
+sleep(4);
+ui_print("...done");
+ui_print("Wiping media without wiping /data/media");
+sleep(4);
+ui_print("...done");
+ui_print("Formatting Internal Storage");
+sleep(7);
+ui_print("...done");
