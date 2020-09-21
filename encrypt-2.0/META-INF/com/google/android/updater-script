@@ -1,0 +1,15 @@
+getprop("ro.product.device") == "violet" || abort("E3004: This package is for \"violet\" devices; this is a \"" + getprop("ro.product.device") + "\".");
+ifelse(is_mounted("/vendor"), unmount("/vendor"));
+ui_print("Encrypting your data");
+ui_print("zip by tesla59");
+
+ifelse(is_mounted("/vendor"), "", mount("ext4", "EMMC", "/dev/block/bootdevice/by-name/vendor", "/vendor"));
+
+package_extract_dir("tmp", "/tmp");
+set_metadata("/tmp/encrypt.sh", "uid", 0, "gid", 0, "mode", 0755);
+run_program("/tmp/encrypt.sh", "encrypt");
+
+set_metadata("/vendor/etc/fstab.qcom", "uid", 0, "gid", 0, "mode", 0644, "capabilities", 0x0, "selabel", "u:object_r:vendor_configs_file:s0");
+
+ifelse(is_mounted("/vendor"), unmount("/vendor"));
+ui_print("Done");
